@@ -1,0 +1,22 @@
+const JWT = require('jsonwebtoken');
+
+const secret = "bye_bye$*56";
+
+function createTokenForUser(user){
+  const payload = {
+    _id: user._id,
+    email: user.email,
+    ProfileImageURL: user.profileImageURL,
+    role: user.role
+  };
+  const token = JWT.sign(payload, secret);
+  return token;
+}
+
+function validateToken(token){
+  if(!token) return null;
+  const payload = JWT.verify(token, secret);
+  return payload;
+}
+
+module.exports = {createTokenForUser, validateToken};
